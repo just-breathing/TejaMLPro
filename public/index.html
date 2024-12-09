@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Readmission Prediction</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type=number],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type=submit] {
+            margin: auto;
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hospital Readmission Prediction</h1>
+    <form id="predictionForm">
+        <label for="age">Age Bracket:</label>
+        <select name="age" id="age" required>
+            <option value="[0-10)">[0-10)</option>
+            <option value="[10-20)">[10-20)</option>
+            <option value="[20-30)">[20-30)</option>
+            <option value="[30-40)">[30-40)</option>
+            <option value="[40-50)">[40-50)</option>
+            <option value="[50-60)">[50-60)</option>
+            <option value="[60-70)">[60-70)</option>
+            <option value="[70-80)">[70-80)</option>
+            <option value="[80-90)">[80-90)</option>
+            <option value="[90-100)">[90-100)</option>
+        </select><br>
+
+        <label for="time_in_hospital">Time in Hospital (days):</label>
+        <input type="number" name="time_in_hospital" id="time_in_hospital" min="0" max="14" required><br>
+
+        <label for="n_procedures">Number of Procedures:</label>
+        <input type="number" name="n_procedures" id="n_procedures" min="0" max="6" required><br>
+
+        <label for="n_lab_procedures">Number of Lab Procedures:</label>
+        <input type="number" name="n_lab_procedures" id="n_lab_procedures" min="0" max="113" required><br>
+
+        <label for="n_medications">Number of Medications:</label>
+        <input type="number" name="n_medications" id="n_medications" min="0" max="79" required><br>
+
+        <label for="n_outpatient">Number of Outpatient Visits:</label>
+        <input type="number" name="n_outpatient" id="n_outpatient" min="0" max="33" required><br>
+
+        <label for="n_inpatient">Number of Inpatient Visits:</label>
+        <input type="number" name="n_inpatient" id="n_inpatient" min="0" max="15" required><br>
+
+        <label for="n_emergency">Number of Emergency Visits:</label>
+        <input type="number" name="n_emergency" id="n_emergency" min="0" max="64" required><br>
+
+        <label for="medical_specialty">Medical Specialty:</label>
+        <select name="medical_specialty" id="medical_specialty" required>
+            <option value="InternalMedicine">Internal Medicine</option>
+            <option value="Other">Other</option>
+            <option value="Emergency/Trauma">Emergency/Trauma</option>
+            <option value="Family/GeneralPractice">Family/General Practice</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Surgery">Surgery</option>
+        </select><br>
+
+        <label for="diag_1">Primary Diagnosis:</label>
+        <select name="diag_1" id="diag_1" required>
+            <option value="">Select...</option> <!-- Placeholder -->
+            <option value='Circulatory'>Circulatory</option>
+            <option value='Other'>Other</option>
+            <option value='Respiratory'>Respiratory</option>
+            <option value='Digestive'>Digestive</option>
+            <option value='Diabetes'>Diabetes</option>
+            <option value='Injury'>Injury</option>
+            <option value='Musculoskeletal'>Musculoskeletal</option>
+        </select><br>
+
+        <label for="diag_2">secondary  Diagnosis:</label>
+        <select name="diag_2" id="diag_2" required>
+            <option value="">Select...</option> <!-- Placeholder -->
+            <option value='Circulatory'>Circulatory</option>
+            <option value='Other'>Other</option>
+            <option value='Respiratory'>Respiratory</option>
+            <option value='Digestive'>Digestive</option>
+            <option value='Diabetes'>Diabetes</option>
+            <option value='Injury'>Injury</option>
+            <option value='Musculoskeletal'>Musculoskeletal</option>
+        </select><br>
+
+        <label for="diag_2">Additional Secondary Diagnosis:</label>
+        <select name="diag_2" id="diag_2" required>
+            <option value="">Select...</option> <!-- Placeholder -->
+            <option value='Circulatory'>Circulatory</option>
+            <option value='Other'>Other</option>
+            <option value='Respiratory'>Respiratory</option>
+            <option value='Digestive'>Digestive</option>
+            <option value='Diabetes'>Diabetes</option>
+            <option value='Injury'>Injury</option>
+            <option value='Musculoskeletal'>Musculoskeletal</option>
+        </select><br>
+   
+
+        <label for="glucose_test">Glucose Test:</label>
+        <select name="glucose_test" id="glucose_test" required>
+            <option value="high">High</option>
+            <option value="normal">Normal</option>
+            <option value="not_performed">Not Performed</option>
+        </select><br>
+
+        <label for="A1Ctest">A1C Test:</label>
+        <select name="A1Ctest" id="A1Ctest" required>
+            <option value="high">High</option>
+            <option value="normal">Normal</option>
+            <option value="not_performed">Not Performed</option>
+        </select><br>
+
+        <label for="change">Change in Diabetes Medication:</label>
+        <select name="change" id="change" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select><br>
+
+        <label for="diabetes_med">Diabetes Medication Prescribed:</label>
+        <select name="diabetes_med" id="diabetes_med" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select><br>
+
+        <button style="display: block; margin: 0 auto;" type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            const response = await fetch('/api/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').textContent = Number(result.prediction)===1 ? 'High Risk of Readmission' : 'Low Risk of Readmission';
+        });
+    </script>
+</body>
+</html>
+
+

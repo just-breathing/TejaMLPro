@@ -1,0 +1,27 @@
+#Ignore node_modules
+node_modules
+
+#Ignore Mac DS_Store files
+.DS_Store
+
+#Ignore Python virtualenvs
+.venv
+.mlpro
+venv
+env
+ENV
+python_ENV
+.eggs
+*.egg-info
+dist
+build
+
+#Ignore Python cache files
+__pycache__/
+*.py[co]
+*.mo
+*.toc
+
+#Ignore Windows thumbs.db and desktop.ini files
+Thumbs.db
+desktop.ini
